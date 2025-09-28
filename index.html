@@ -150,7 +150,8 @@
                 </div>
             </div>
             
-            <div class="nav-center">
+            <!-- Desktop Navigation -->
+            <div class="nav-center desktop-nav" id="navCenter">
                 <div class="location-badge">
                     <i class="fas fa-map-marker-alt"></i>
                     <span>Bangalore</span>
@@ -161,20 +162,57 @@
                         <input type="text" id="searchInput" placeholder="Search beauty services..." />
                     </div>
                 </div>
+                <div class="action-buttons">
+                    <button class="cta-button">
+                        <i class="fas fa-calendar"></i>
+                        <span>Book Now</span>
+                    </button>
+                    <div class="contact-actions">
+                        <a href="https://wa.me/918431614767" class="action-btn whatsapp">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="tel:+918431614767" class="action-btn phone">
+                            <i class="fas fa-phone"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
             
-            <div class="action-buttons">
-                <button class="cta-button">
-                    <i class="fas fa-calendar"></i>
-                    <span>Book Now</span>
+            <!-- Mobile-only elements -->
+            <div class="mobile-nav-right">
+                <a href="https://wa.me/918431614767" class="mobile-whatsapp-btn">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-expanded="false" aria-controls="mobileNavCenter" aria-label="Toggle mobile menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </button>
-                <div class="contact-actions">
-                    <a href="https://wa.me/918431614767" class="action-btn whatsapp">
-                        <i class="fab fa-whatsapp"></i>
-                    </a>
-                    <a href="tel:+918431614767" class="action-btn phone">
-                        <i class="fas fa-phone"></i>
-                    </a>
+            </div>
+            
+            <!-- Mobile Navigation Menu -->
+            <div class="mobile-nav-center" id="mobileNavCenter">
+                <div class="mobile-nav-content">
+                    <div class="mobile-search-wrapper">
+                        <div class="modern-search">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="mobileSearchInput" placeholder="Search beauty services..." />
+                        </div>
+                    </div>
+                    <div class="mobile-location-badge">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Bangalore</span>
+                    </div>
+                    <div class="mobile-action-buttons">
+                        <button class="mobile-cta-button">
+                            <i class="fas fa-calendar"></i>
+                            <span>Book Now</span>
+                        </button>
+                        <a href="tel:+918431614767" class="mobile-phone-btn">
+                            <i class="fas fa-phone"></i>
+                            <span>Call Us</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -376,8 +414,12 @@
                 </div>
                 
                 <div class="featured-services-modern">
-                    <div class="services-carousel">
-                        <div class="service-item" id="featured-services-container">
+                    <div class="carousel-container">
+                        <button class="carousel-nav carousel-prev" onclick="scrollServices('left')">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <div class="services-carousel">
+                            <div class="service-item" id="featured-services-container">
                             <!-- Services will be populated dynamically -->
                             <div class="modern-service-card available" onclick="showServiceDetail('hydrafacial')">
                                 <div class="service-image">
@@ -468,6 +510,9 @@
                                 </div>
                             </div>
                         </div>
+                        <button class="carousel-nav carousel-next" onclick="scrollServices('right')">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
                     </div>
                 </div>
             </div>

@@ -37,6 +37,8 @@ document.addEventListener('DOMContentLoaded', function() {
     setupEventListeners();
     setupFilterButtons();
     setupModernFilters();
+    setupMobileMenu();
+    setupCarouselAutoHide();
 
     // Initialize with facial services (default active filter)
     populateFilteredServices('facials');
@@ -47,11 +49,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Event Listeners
 function setupEventListeners() {
-    // Search functionality
+    // Search functionality for desktop
     const searchInput = document.getElementById('searchInput');
     if (searchInput) {
         searchInput.addEventListener('input', handleSearch);
     }
+    
+    // Search functionality for mobile is handled in setupMobileMenu
 
     // Copy coupon codes
     document.addEventListener('click', function(e) {
@@ -270,16 +274,162 @@ function createServiceCard(service) {
     `;
 }
 
-// Scrolling functionality for Most Booked Services
+// Mobile Menu Toggle
+function toggleMobileMenu() {
+    const mobileNavCenter = document.getElementById('mobileNavCenter');
+    const mobileToggle = document.querySelector('.mobile-menu-toggle');
+    const body = document.body;
+    
+    if (mobileNavCenter && mobileToggle) {
+        const isActive = mobileNavCenter.classList.contains('active');
+        
+        mobileNavCenter.classList.toggle('active');
+        mobileToggle.classList.toggle('active');
+        
+        // Toggle scroll lock and ARIA attributes
+        if (!isActive) {
+            body.classList.add('menu-open');
+            mobileToggle.setAttribute('aria-expanded', 'true');
+            mobileToggle.setAttribute('aria-controls', 'mobileNavCenter');
+            
+            // Focus first interactive element in menu
+            const firstInput = mobileNavCenter.querySelector('input, button, a');
+            if (firstInput) {
+                setTimeout(() => firstInput.focus(), 100);
+            }
+        } else {
+            body.classList.remove('menu-open');
+            mobileToggle.setAttribute('aria-expanded', 'false');
+            mobileToggle.focus();
+        }
+    }
+}
+
+// Setup mobile menu functionality
+function setupMobileMenu() {
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(e) {
+        const mobileNavCenter = document.getElementById('mobileNavCenter');
+        const mobileToggle = document.querySelector('.mobile-menu-toggle');
+        
+        if (mobileNavCenter && mobileToggle && 
+            !mobileNavCenter.contains(e.target) && 
+            !mobileToggle.contains(e.target) && 
+            mobileNavCenter.classList.contains('active')) {
+            toggleMobileMenu();
+        }
+    });
+    
+    // Close mobile menu when navigating
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.mobile-cta-button, .mobile-phone-btn, .mobile-whatsapp-btn')) {
+            const mobileNavCenter = document.getElementById('mobileNavCenter');
+            
+            if (mobileNavCenter && mobileNavCenter.classList.contains('active')) {
+                toggleMobileMenu();
+            }
+        }
+    });
+    
+    // Keyboard accessibility - close menu on Escape
+    document.addEventListener('keydown', function(e) {
+        const mobileNavCenter = document.getElementById('mobileNavCenter');
+        if (e.key === 'Escape' && mobileNavCenter && mobileNavCenter.classList.contains('active')) {
+            toggleMobileMenu();
+        }
+    });
+    
+    // Focus trap for mobile menu
+    document.addEventListener('keydown', function(e) {
+        const mobileNavCenter = document.getElementById('mobileNavCenter');
+        if (!mobileNavCenter || !mobileNavCenter.classList.contains('active')) return;
+        
+        if (e.key === 'Tab') {
+            const focusableElements = mobileNavCenter.querySelectorAll(
+                'input, button, a, [tabindex]:not([tabindex="-1"])'
+            );
+            const firstElement = focusableElements[0];
+            const lastElement = focusableElements[focusableElements.length - 1];
+            
+            if (e.shiftKey && document.activeElement === firstElement) {
+                e.preventDefault();
+                lastElement.focus();
+            } else if (!e.shiftKey && document.activeElement === lastElement) {
+                e.preventDefault();
+                firstElement.focus();
+            }
+        }
+    });
+    
+    // Setup mobile search functionality
+    const mobileSearchInput = document.getElementById('mobileSearchInput');
+    if (mobileSearchInput) {
+        mobileSearchInput.addEventListener('input', handleSearch);
+    }
+}
+
+// Enhanced Scrolling functionality for Featured Services
 function scrollServices(direction) {
     const container = document.getElementById('featured-services-container');
-    const scrollAmount = 240; // Width of one service card + gap
+    if (!container) return;
+    
+    const cardWidth = container.querySelector('.modern-service-card')?.offsetWidth || 220;
+    const gap = 16;
+    const scrollAmount = cardWidth + gap;
     
     if (direction === 'left') {
         container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
     } else {
         container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     }
+}
+
+// Setup carousel auto-hide navigation on mobile
+function setupCarouselAutoHide() {
+    const prevBtn = document.querySelector('.carousel-prev');
+    const nextBtn = document.querySelector('.carousel-next');
+    const container = document.getElementById('featured-services-container');
+    
+    if (!container || !prevBtn || !nextBtn) return;
+    
+    function updateNavigationVisibility() {
+        const scrollLeft = container.scrollLeft;
+        const maxScroll = container.scrollWidth - container.clientWidth;
+        
+        // Hide navigation entirely if no scrollable content
+        if (maxScroll <= 0) {
+            prevBtn.classList.add('hidden');
+            nextBtn.classList.add('hidden');
+            prevBtn.setAttribute('aria-hidden', 'true');
+            nextBtn.setAttribute('aria-hidden', 'true');
+            return;
+        } else {
+            prevBtn.classList.remove('hidden');
+            nextBtn.classList.remove('hidden');
+            prevBtn.setAttribute('aria-hidden', 'false');
+            nextBtn.setAttribute('aria-hidden', 'false');
+        }
+        
+        // Update navigation buttons based on scroll position
+        const atStart = scrollLeft <= 0;
+        const atEnd = scrollLeft >= maxScroll - 5;
+        
+        prevBtn.style.opacity = atStart ? '0.5' : '1';
+        prevBtn.style.pointerEvents = atStart ? 'none' : 'auto';
+        prevBtn.setAttribute('aria-disabled', atStart.toString());
+        
+        nextBtn.style.opacity = atEnd ? '0.5' : '1';
+        nextBtn.style.pointerEvents = atEnd ? 'none' : 'auto';
+        nextBtn.setAttribute('aria-disabled', atEnd.toString());
+    }
+    
+    container.addEventListener('scroll', updateNavigationVisibility);
+    
+    // Update on resize to handle responsive changes
+    window.addEventListener('resize', updateNavigationVisibility);
+    
+    // Initialize navigation visibility
+    setTimeout(updateNavigationVisibility, 100);
 }
 
 // Enhanced filter functionality
@@ -331,6 +481,13 @@ function populateFilteredServices(category) {
     }
     
     container.innerHTML = services.slice(0, 6).map(service => createFeaturedServiceCard(service)).join('');
+    
+    // Reset scroll position and update navigation visibility
+    container.scrollLeft = 0;
+    setTimeout(() => {
+        const event = new Event('scroll');
+        container.dispatchEvent(event);
+    }, 100);
 }
 
 // Product category functions

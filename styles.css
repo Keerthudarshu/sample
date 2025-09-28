@@ -230,6 +230,46 @@ body {
     border-bottom: 1px solid var(--border-color);
 }
 
+/* Mobile Menu Toggle */
+.mobile-menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 25px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+/* Hide mobile elements on desktop */
+@media (min-width: 769px) {
+    .mobile-nav-right,
+    .mobile-nav-center {
+        display: none;
+    }
+}
+
+.mobile-menu-toggle span {
+    width: 100%;
+    height: 3px;
+    background-color: var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.mobile-menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.mobile-menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
+}
+
 .nav-container {
     display: flex;
     align-items: center;
@@ -383,6 +423,79 @@ body {
 .action-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Carousel Container */
+.carousel-container {
+    position: relative;
+    width: 100%;
+}
+
+/* Carousel Navigation Buttons */
+.carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 45px;
+    height: 45px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid var(--border-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 100;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    font-size: 1.2rem;
+    color: var(--primary-color);
+}
+
+.carousel-nav:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 6px 20px rgba(107, 75, 62, 0.3);
+}
+
+.carousel-nav:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+.carousel-nav:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+.carousel-prev {
+    left: 10px;
+}
+
+.carousel-next {
+    right: 10px;
+}
+
+/* Services Carousel Improvements */
+.services-carousel {
+    overflow: hidden;
+    width: 100%;
+}
+
+.service-item {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 20px;
+}
+
+.service-item::-webkit-scrollbar {
+    display: none;
 }
 
 .header-top {
@@ -874,6 +987,43 @@ section.active {
 
 .featured-services::-webkit-scrollbar {
     display: none;
+}
+
+/* Modern Service Cards Responsive */
+.modern-service-card {
+    min-width: 250px;
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.modern-service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+@media (max-width: 768px) {
+    .modern-service-card {
+        min-width: 220px;
+    }
+}
+
+@media (max-width: 480px) {
+    .modern-service-card {
+        min-width: 200px;
+    }
+    
+    .featured-services-modern {
+        padding: 0;
+    }
+    
+    .showcase-header {
+        padding: 0 1rem;
+    }
 }
 
 .service-cards {
@@ -1686,6 +1836,260 @@ section.active {
     display: flex;
     border-top: 1px solid var(--border-color);
     z-index: 1000;
+    height: 70px;
+}
+
+@media (max-width: 480px) {
+    .bottom-nav {
+        height: 65px;
+    }
+    
+    body {
+        padding-bottom: 65px;
+    }
+}
+
+/* Mobile Responsiveness for Specific Sections */
+
+/* Premium Beauty Products Section */
+@media (max-width: 768px) {
+    .modern-products-section {
+        padding: 2rem 1rem;
+        margin: 2rem 0;
+        border-radius: 20px;
+    }
+    
+    .products-header {
+        margin-bottom: 2rem;
+    }
+    
+    .products-header h2 {
+        font-size: 1.8rem;
+        line-height: 1.3;
+    }
+    
+    .products-header p {
+        font-size: 1rem;
+        padding: 0 0.5rem;
+    }
+    
+    .products-preview-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    .product-preview-image {
+        height: 160px;
+    }
+    
+    .product-preview-content {
+        padding: 1.2rem;
+    }
+    
+    .product-preview-content h3 {
+        font-size: 1.1rem;
+    }
+    
+    .product-preview-content p {
+        font-size: 0.9rem;
+    }
+    
+    .product-features {
+        gap: 0.3rem;
+    }
+    
+    .feature-item {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.6rem;
+    }
+}
+
+/* Be the First to Know Section */
+@media (max-width: 768px) {
+    .notify-section {
+        padding: 2rem 1.5rem;
+        margin: 1.5rem 0;
+        border-radius: 15px;
+    }
+    
+    .notify-content h3 {
+        font-size: 1.3rem;
+        line-height: 1.3;
+    }
+    
+    .notify-content p {
+        font-size: 1rem;
+        margin: 0 0 1.5rem 0;
+        line-height: 1.4;
+    }
+    
+    .notify-btn {
+        padding: 0.9rem 1.8rem;
+        font-size: 1rem;
+        width: 100%;
+        max-width: 250px;
+    }
+}
+
+/* Why GlowOnCall Section */
+@media (max-width: 768px) {
+    .features-section {
+        flex-direction: column;
+        padding: 1rem;
+        gap: 2rem;
+        text-align: center;
+    }
+    
+    .feature-list {
+        width: 100%;
+        max-width: 400px;
+    }
+    
+    .feature-item {
+        justify-content: center;
+        margin-bottom: 1.2rem;
+        padding: 0.8rem;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(107, 75, 62, 0.1);
+    }
+    
+    .feature-item i {
+        font-size: 18px;
+        min-width: 20px;
+    }
+    
+    .feature-item span {
+        font-size: 0.95rem;
+        font-weight: 500;
+    }
+    
+    .feature-image {
+        width: 200px;
+        height: 200px;
+        border-radius: 20px;
+        box-shadow: 0 8px 25px rgba(107, 75, 62, 0.2);
+    }
+}
+
+/* Enhanced Service Areas Section */
+@media (max-width: 768px) {
+    .service-areas {
+        margin: 1rem 0;
+        padding: 1.2rem;
+        border-radius: 15px;
+    }
+    
+    .service-areas h3 {
+        font-size: 1.1rem;
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+    
+    .service-areas p {
+        font-size: 0.9rem;
+        text-align: center;
+        margin-bottom: 1.2rem;
+        line-height: 1.4;
+    }
+    
+    .locations-grid {
+        justify-content: center;
+        gap: 0.5rem;
+    }
+    
+    .locations-grid .location-tag {
+        font-size: 0.8rem;
+        padding: 0.5rem 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Premium Beauty Products */
+    .modern-products-section {
+        padding: 1.5rem 0.8rem;
+        margin: 1.5rem 0;
+    }
+    
+    .products-header h2 {
+        font-size: 1.6rem;
+    }
+    
+    .products-preview-grid {
+        gap: 1rem;
+    }
+    
+    .product-preview-image {
+        height: 140px;
+    }
+    
+    .product-coming-soon {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+    }
+    
+    /* Be the First to Know */
+    .notify-section {
+        padding: 1.5rem 1rem;
+        margin: 1rem 0;
+    }
+    
+    .notify-content h3 {
+        font-size: 1.2rem;
+    }
+    
+    .notify-content p {
+        font-size: 0.95rem;
+    }
+    
+    .notify-btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.95rem;
+    }
+    
+    /* Why GlowOnCall */
+    .features-section {
+        padding: 0.8rem;
+        gap: 1.5rem;
+    }
+    
+    .feature-item {
+        padding: 0.7rem;
+        margin-bottom: 1rem;
+    }
+    
+    .feature-item i {
+        font-size: 16px;
+    }
+    
+    .feature-item span {
+        font-size: 0.9rem;
+    }
+    
+    .feature-image {
+        width: 160px;
+        height: 160px;
+    }
+    
+    /* Service Areas */
+    .service-areas {
+        padding: 1rem;
+        margin: 0.8rem 0;
+    }
+    
+    .service-areas h3 {
+        font-size: 1rem;
+    }
+    
+    .service-areas p {
+        font-size: 0.85rem;
+    }
+    
+    .locations-grid .location-tag {
+        font-size: 0.75rem;
+        padding: 0.4rem 0.7rem;
+    }
 }
 
 .nav-item {
@@ -2283,29 +2687,197 @@ section.active {
 
 @media (max-width: 768px) {
     .nav-container {
-        flex-direction: column;
-        gap: 1rem;
+        position: relative;
         padding: 1rem;
+        justify-content: space-between;
+        align-items: center;
+        height: 70px;
     }
     
-    .brand-section {
+    /* Hide desktop navigation on mobile */
+    .desktop-nav {
+        display: none !important;
+    }
+    
+    /* Show mobile navigation elements */
+    .mobile-nav-right {
+        display: flex !important;
+        align-items: center;
+        gap: 1rem;
+    }
+    
+    .mobile-nav-center {
+        display: block !important;
+    }
+    
+    /* Hide brand tagline on mobile for space */
+    .brand-tagline {
+        display: none;
+    }
+    
+    .brand-name {
+        font-size: 1.2rem;
+    }
+    
+    .mobile-whatsapp-btn {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background: var(--success-color);
+        color: white;
+        display: flex;
+        align-items: center;
         justify-content: center;
+        text-decoration: none;
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
     }
     
-    .nav-center {
+    .mobile-whatsapp-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+    }
+    
+    .mobile-menu-toggle {
+        display: flex;
+    }
+    
+    /* Mobile navigation panel */
+    .mobile-nav-center {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background: white;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        transform: translateY(-100%);
+        transition: transform 0.3s ease;
+        z-index: 999;
+        border-top: 1px solid var(--border-color);
+        max-height: calc(100vh - 70px);
+        overflow-y: auto;
+    }
+    
+    .mobile-nav-center.active {
+        transform: translateY(0);
+    }
+    
+    .mobile-nav-content {
+        padding: 2rem 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+    
+    .mobile-search-wrapper {
         width: 100%;
+    }
+    
+    .mobile-location-badge {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        background: var(--accent-color);
+        color: white;
+        padding: 1rem;
+        border-radius: 12px;
+        font-size: 1rem;
+        font-weight: 500;
+    }
+    
+    .mobile-action-buttons {
+        display: flex;
         flex-direction: column;
         gap: 1rem;
+    }
+    
+    .mobile-cta-button {
+        background: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 1rem;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .mobile-cta-button:hover {
+        background: var(--price-tag-color);
+        transform: translateY(-2px);
+    }
+    
+    .mobile-phone-btn {
+        background: var(--accent-color);
+        color: white;
+        text-decoration: none;
+        padding: 1rem;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+    }
+    
+    .mobile-phone-btn:hover {
+        background: var(--price-tag-color);
+        transform: translateY(-2px);
+    }
+    
+    body.menu-open {
+        overflow: hidden;
+        height: 100vh;
+    }
+    
+    .hidden {
+        display: none !important;
     }
     
     .modern-search {
         width: 100%;
-        max-width: 400px;
+        max-width: none;
     }
     
     .action-buttons {
         justify-content: center;
         flex-wrap: wrap;
+        width: 100%;
+    }
+    
+    .location-badge {
+        justify-content: center;
+    }
+    
+    /* Carousel Navigation for Mobile */
+    .carousel-nav {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+    
+    .carousel-nav.hidden {
+        display: none;
+    }
+    
+    .carousel-prev {
+        left: 5px;
+    }
+    
+    .carousel-next {
+        right: 5px;
+    }
+    
+    .service-item {
+        padding: 10px 50px;
     }
     
     .hero-grid {
@@ -2350,58 +2922,96 @@ section.active {
 
 @media (max-width: 480px) {
     .brand-name {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
     }
     
     .brand-tagline {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
     }
     
     .hero-title {
         font-size: 1.8rem;
+        line-height: 1.2;
     }
     
     .hero-description {
-        font-size: 1rem;
+        font-size: 0.95rem;
+        line-height: 1.4;
     }
     
     .primary-cta, .secondary-cta {
-        padding: 0.8rem 1.5rem;
-        font-size: 1rem;
+        padding: 0.8rem 1.2rem;
+        font-size: 0.9rem;
     }
     
     .modern-hero {
-        padding: 2rem 1rem;
+        padding: 1.5rem 1rem;
     }
     
     .feature-cards {
-        gap: 1rem;
+        gap: 0.8rem;
+        flex-direction: column;
     }
     
     .feature-card {
-        padding: 1.5rem;
+        padding: 1.2rem;
+        width: 100%;
     }
     
     .showcase-header h2 {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
     }
     
     .services-grid {
-        gap: 1rem;
+        gap: 0.8rem;
     }
     
     .modern-filters {
         flex-direction: column;
         gap: 0.5rem;
+        padding: 0 1rem;
     }
     
     .modern-filter-btn {
         width: 100%;
-        justify-content: flex-start;
+        justify-content: center;
+        padding: 0.8rem;
     }
     
     .services-carousel {
         grid-template-columns: 1fr;
+    }
+    
+    .nav-container {
+        padding: 0.8rem 1rem;
+    }
+    
+    .mobile-menu-toggle {
+        width: 25px;
+        height: 20px;
+    }
+    
+    .carousel-nav {
+        width: 30px;
+        height: 30px;
+        font-size: 0.9rem;
+    }
+    
+    .carousel-prev {
+        left: 2px;
+    }
+    
+    .carousel-next {
+        right: 2px;
+    }
+    
+    .service-item {
+        padding: 10px 40px;
+        gap: 12px;
+    }
+    
+    .modern-service-card {
+        min-width: 200px;
     }
 }
 
